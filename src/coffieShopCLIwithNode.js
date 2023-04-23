@@ -1,7 +1,6 @@
 /* 
 Coffie Shop CLI Shop
-Show Coffie menu 
- Latte : 100 rs
+
 
 
  // you have to build a coffee shop cli app
@@ -37,9 +36,7 @@ function showMenu(menu) {
 
 function runProgram(rl) {
   rl.question(
-    `Please Select Item No to add in order \nor press ${clc.red(
-      "X"
-    )} to exit \n`,
+    `Enter Item No to add \nor press ${clc.red("X")} to exit \n`,
     (itemNo) => {
       if (itemNo == "X" || itemNo == "x") {
         if (cart.length > 0) {
@@ -53,15 +50,18 @@ function runProgram(rl) {
           console.table(cart);
           console.log(clc.black.bgMagentaBright(` Total  : ${Total} Rs `));
           rl.close();
+        } else {
+          rl.close();
         }
       } else {
         itemNo = Number(itemNo);
-        if (itemNo > itemNo.length) {
-          console.log(
-            "Invalid Item number. please check menu for referance \n"
+        if (itemNo > menus.length) {
+          console.error(
+            clc.red("Invalid Item number. please check menu for referance \n")
           );
         } else {
-          cart.push(menus[itemNo - 1]);
+          cart.push(menus[itemNo]);
+          console.log(clc.green(`${menus[itemNo].itemeName} added  to bill `));
         }
         runProgram(rl);
       }
